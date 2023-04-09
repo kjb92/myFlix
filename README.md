@@ -23,4 +23,4 @@ Coming soon
 9. Allow existing users to deregister
 
 ## Project dependencies 
-HTML5, CSS3, JavaScript ES6, Node.js
+HTML5, CSS3, JavaScript ES6, Node v18.15.0
