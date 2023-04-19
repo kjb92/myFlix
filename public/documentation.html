@@ -3,33 +3,123 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Documentation | myFlix</title>
+    <title>API Documentation | myFlix</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>Documentation</h1>
-    <div>
-      <h2>Objective</h2>
-      <p>
-        To build the server-side component of a “movies” web application. The web
-        application will provide users with access to information about different
-        movies, directors, and genres. Users will be able to sign up, update their
-        personal information, and create a list of their favorite movies
-      </p>
-    </div>
-    <div>
-      <h2>Features</h2>
+    <div class="sidebar hidden">
       <ul>
-        <li>Return a list of ALL movies to the user</li>
-        <li>Return data (description, genre, director, image URL, whether it's featured or not) about a single movie by
-            title to the user</li>
-        <li>Return data about a genre (description) by name/title</li>
-        <li>Return data about a director (bio, birth year, death year) by name</li>
-        <li>Allow new users to register</li>
-        <li>Allow users to update their user info</li>
-        <li>Allow users to add a movie to their list of favorites</li>
-        <li>Allow users to remove a movie from their list of favorites</li>
-        <li>Allow existing users to deregister</li>
+        <li><a href="#users">GET /users</a></li>
+        <li><a href="#user">GET /users/{id}</a></li>
+        <li><a href="#movies">GET /movies</a></li>
+        <li><a href="#movie">GET /movies/{title}</a></li>
+        <li><a href="#movie-post">POST /movies</a></li>
+        <li><a href="#movie-put">PUT /movies/{title}</a></li>
+        <li><a href="#movie-delete">DELETE /movies/{title}</a></li>
       </ul>
     </div>
-  </body>
+    <div class="container">
+      <h1>API Documentation</h1>
+      <div class="endpoint" id="ep-get-movies">
+        <h2>GET /movies</h2>
+        <p>Return a list of ALL movies to the user</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "page": "integer",
+                  "limit": "integer"
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "data": [
+                    {
+                      "id": "string",
+                      "username": "string",
+                      "email": "string",
+                      "createdAt": "string",
+                      "updatedAt": "string"
+                    }
+                  ],
+                  "total": "integer",
+                  "limit": "integer",
+                  "page": "integer",
+                  "pages": "integer"
+                }
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="endpoint" id="ep-get-movie-data">
+        <h2>GET /movies/{title}</h2>
+        <p>Return data (description, genre, director, 
+          image URL, whether it's featured or not) about 
+          a single movie by title to the user
+        </p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>The title of the movie.</td>
+          </tr>
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "page": "integer",
+                  "limit": "integer"
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "data": [
+                    {
+                      "id": "string",
+                      "username": "string",
+                      "email": "string",
+                      "createdAt": "string",
+                      "updatedAt": "string"
+                    }
+                  ],
+                  "total": "integer",
+                  "limit": "integer",
+                  "page": "integer",
+                  "pages": "integer"
+                }
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>  
 </html>
