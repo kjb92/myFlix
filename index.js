@@ -1,16 +1,21 @@
 const express = require('express'),
 morgan = require('morgan'),
+bodyParser = require('body-parser'),
 uuid = require('uuid');
 
 const app = express();
+
+//MIDDLEWARE: log all server requests
+app.use(morgan('common'));
+// Middleware to serve static files from the "public" folder
+app.use(express.static('public'));
+app.use(bodyParser.json());
 
 //VAR: Sample Users
 let users = [
   {
     id: 1,
-    username: 'kevin',
-    firstName: 'Kevin',
-    lastName: 'Blumenstock',
+    name: 'Mary',
     favoriteMovies: []
   }
 ];
@@ -74,25 +79,6 @@ let movies = [
 ];
 
 
-
-//MIDDLEWARE: log all server requests
-app.use(morgan('common'));
-// Middleware to serve static files from the "public" folder
-app.use(express.static('public'));
-
-//CREATE: New User
-app.post('/users', (req, res) => {
-  const newUser = req.body;
-
-  if (newUser.username) {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).json(newUser);
-  } else {
-    res.status(400).send('Users need usernames');
-  }
-});
-
 //READ: Welcome-Screen
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
@@ -145,6 +131,18 @@ app.get('/movies/director/:directorName', (req, res) => {
   }
 });
 
+//CREATE: New User
+app.post('/users', (req, res) => {
+  const newUser = req.body;
+
+  if (newUser.name) {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).json(newUser);
+  } else {
+    res.status(400).send('Users need names');
+  }
+});
 
 //MIDDLEWARE: handle uncaught errors
 app.use((err, req, res, next) => {
