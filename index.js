@@ -35,7 +35,7 @@ app.get('/movies', (req, res) => {
 
 
 //Middleware to handle uncaught errors
-app.use((err, res, req, next) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
