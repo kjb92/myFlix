@@ -15,7 +15,9 @@ app.use(bodyParser.json());
 let users = [
   {
     id: 1,
-    name: 'Mary',
+    username: 'kevinblumenstock',
+    firstName: 'Kevin',
+    lastName: 'Blumenstock',
     favoriteMovies: []
   }
 ];
@@ -135,12 +137,12 @@ app.get('/movies/director/:directorName', (req, res) => {
 app.post('/users', (req, res) => {
   const newUser = req.body;
 
-  if (newUser.name) {
+  if (newUser.username) {
     newUser.id = uuid.v4();
     users.push(newUser);
     res.status(201).json(newUser);
   } else {
-    res.status(400).send('Users need names');
+    res.status(400).send('Users need usernames');
   }
 });
 
