@@ -7,21 +7,11 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="sidebar hidden">
-      <ul>
-        <li><a href="#users">GET /users</a></li>
-        <li><a href="#user">GET /users/{id}</a></li>
-        <li><a href="#movies">GET /movies</a></li>
-        <li><a href="#movie">GET /movies/{title}</a></li>
-        <li><a href="#movie-post">POST /movies</a></li>
-        <li><a href="#movie-put">PUT /movies/{title}</a></li>
-        <li><a href="#movie-delete">DELETE /movies/{title}</a></li>
-      </ul>
-    </div>
     <div class="container">
       <h1>API Documentation</h1>
-      <div class="endpoint" id="ep-get-movies">
-        <h2>GET /movies</h2>
+      <!-- GET all movies -->
+      <div class="endpoint">
+        <h2><span class="http-method get">GET</span> /movies</h2>
         <p>Return a list of ALL movies to the user</p>
         <table>
           <tr>
@@ -29,97 +19,433 @@
             <th>Type</th>
             <th>Description</th>
           </tr>
+          <!-- REQUEST body data -->
           <tr>
             <td>Request body data format</td>
             <td>JSON</td>
             <td>
-              <pre>
-                {
-                  "page": "integer",
-                  "limit": "integer"
-                }
-              </pre>
+              <pre>None</pre>
             </td>
           </tr>
+          <!-- RESPONSE body data -->
           <tr>
             <td>Response body data format</td>
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "data": [
-                    {
-                      "id": "string",
-                      "username": "string",
-                      "email": "string",
-                      "createdAt": "string",
-                      "updatedAt": "string"
-                    }
-                  ],
-                  "total": "integer",
-                  "limit": "integer",
-                  "page": "integer",
-                  "pages": "integer"
-                }
+                [
+                  {
+                    "title": "Text",
+                    "description": "Text",
+                    "director": {
+                        "firstName": "Text",
+                        "lastName": "Text",
+                        "bio": "Text",
+                        "dateOfBirth": number
+                    },
+                    "genres": [
+                        {
+                          "name": "Text",
+                          "description": "Text."
+                        },
+                        {
+                          "name": "Text",
+                          "description": "Text"
+                        }
+                    ],
+                    "imageURL": "URL",
+                    "featured": true
+                  },
+                  {
+                    "title": "Text",
+                    "description": "Text",
+                    "director": {
+                        "firstName": "Text",
+                        "lastName": "Text",
+                        "bio": "Text",
+                        "dateOfBirth": number
+                    },
+                    "genres": [
+                        {
+                          "name": "Text",
+                          "description": "Text."
+                        },
+                        {
+                          "name": "Text",
+                          "description": "Text"
+                        }
+                    ],
+                    "imageURL": "URL",
+                    "featured": true
+                  }
+                ]
               </pre>
             </td>
           </tr>
         </table>
-      </div>
-      <div class="endpoint" id="ep-get-movie-data">
-        <h2>GET /movies/{title}</h2>
-        <p>Return data (description, genre, director, 
-          image URL, whether it's featured or not) about 
-          a single movie by title to the user
-        </p>
+      </div>      
+      <!-- GET movie data about a single movie -->
+      <div class="endpoint">
+        <h2><span class="http-method get">GET</span> /movies/{title}</h2>
+        <p>Return data (description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user</p>
         <table>
           <tr>
             <th>Parameter</th>
             <th>Type</th>
             <th>Description</th>
           </tr>
+          <!-- PARAMETER title -->
           <tr>
             <td>title</td>
-            <td>string</td>
-            <td>The title of the movie.</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "Frozen", "The Lion King"</pre>
+            </td>
           </tr>
+          <!-- REQUEST body data -->
           <tr>
             <td>Request body data format</td>
             <td>JSON</td>
             <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
               <pre>
-                {
-                  "page": "integer",
-                  "limit": "integer"
-                }
+                [
+                  {
+                    "title": "Text",
+                    "description": "Text",
+                    "director": {
+                        "firstName": "Text",
+                        "lastName": "Text",
+                        "bio": "Text",
+                        "dateOfBirth": number
+                    },
+                    "genres": [
+                        {
+                          "name": "Text",
+                          "description": "Text."
+                        },
+                        {
+                          "name": "Text",
+                          "description": "Text"
+                        }
+                    ],
+                    "imageURL": "URL",
+                    "featured": true
+                  }
+                ]
               </pre>
             </td>
           </tr>
+        </table>
+      </div>
+      <!-- GET genre description by genre name -->
+      <div class="endpoint">
+        <h2><span class="http-method get">GET</span> /movies/genre/{genreName}</h2>
+        <p>Return data about a genre (description) by name/title</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER title -->
+          <tr>
+            <td>genreName</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "Animation", "Drama"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
           <tr>
             <td>Response body data format</td>
             <td>JSON</td>
             <td>
               <pre>
                 {
-                  "data": [
-                    {
-                      "id": "string",
-                      "username": "string",
-                      "email": "string",
-                      "createdAt": "string",
-                      "updatedAt": "string"
-                    }
-                  ],
-                  "total": "integer",
-                  "limit": "integer",
-                  "page": "integer",
-                  "pages": "integer"
+                  "name": "Animation",
+                  "description": "..."
                 }
               </pre>
             </td>
           </tr>
         </table>
       </div>
+      <!-- GET director by name -->
+      <div class="endpoint">
+        <h2><span class="http-method get">GET</span> /movies/director/{directorName}</h2>
+        <p>Return data about a director (bio, birth year, death year) by name</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER title -->
+          <tr>
+            <td>directorName</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "Roger Allers"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "firstName": "Roger",
+                  "lastName": "Allers",
+                  "bio": "Roger Allers is an American film director, screenwriter, storyboard artist, animator and voice actor. He is best known for co-directing the Disney animated feature The Lion King (1994).",
+                  "dateOfBirth": 1949
+                }
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div>        
+      <!-- POST add a new user -->
+      <div class="endpoint">
+        <h2><span class="http-method post">POST</span> /users</h2>
+        <p>Allow new users to register</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "username": "marymason",
+                  "firstName": "Mary",
+                  "lastName": "Mason",
+                  "favoriteMovies":[]
+                }
+            </pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "username": "marymason",
+                  "firstName": "Mary",
+                  "lastName": "Mason",
+                  "favoriteMovies": [],
+                  "id": "8daa9319"
+              }
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div>   
+      <!-- POST add a new favorite movie -->
+      <div class="endpoint">
+        <h2><span class="http-method post">POST</span> /users/{id}/{movieTitle}</h2>
+        <p>Allow users to add a movie to their list of favorites</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER userID -->
+          <tr>
+            <td>id</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "8daa9319"</pre>
+            </td>
+          </tr>
+          <!-- PARAMETER movieTitle -->
+          <tr>
+            <td>movieTitle</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "The Lion King"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>Text</td>
+            <td>
+              <pre>The Lion King has been added to user 1's favorite movies</pre>
+            </td>
+          </tr>
+        </table>
+      </div>    
+      <!-- PUT update user info (username) -->
+      <div class="endpoint">
+        <h2><span class="http-method put">PUT</span> /users/{id}</h2>
+        <p>Allow users to update their user info</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER userID -->
+          <tr>
+            <td>id</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "1"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "username": "kevin-updated"
+                }
+              </pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+                {
+                  "id": 1,
+                  "username": "kevin-updated",
+                  "firstName": "Kevin",
+                  "lastName": "Blumenstock",
+                  "favoriteMovies": [
+                      "The Lion King"
+                  ]
+                }              
+            </pre>
+            </td>
+          </tr>
+        </table>
+      </div>  
+      <!-- DELETE remove a favorite movie -->
+      <div class="endpoint">
+        <h2><span class="http-method delete">DELETE</span> /users/{id}/{movieTitle}</h2>
+        <p>Allow users to remove a movie from their list of favorites</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER userID -->
+          <tr>
+            <td>id</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "2"</pre>
+            </td>
+          </tr>
+          <!-- PARAMETER movieTitle -->
+          <tr>
+            <td>movieTitle</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "The Lion King"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>Text</td>
+            <td>
+              <pre>The Lion King has been removed from user 2's favorite movies</pre>
+            </td>
+          </tr>
+        </table>
+      </div>     
+      <!-- DELETE a user -->
+      <div class="endpoint">
+        <h2><span class="http-method delete">DELETE</span> /users/{id}</h2>
+        <p>Allow existing users to deregister</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER userID -->
+          <tr>
+            <td>id</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "3"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>Text</td>
+            <td>
+              <pre>The user with username "deleteme" and user-id "3" has been deleted</pre>
+            </td>
+          </tr>
+        </table>
+      </div>     
     </div>
   </body>  
 </html>

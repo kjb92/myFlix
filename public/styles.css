@@ -55,6 +55,7 @@ h1 {
   color: #333;
 }
 
+
 /* Styles for the endpoint table cells */
 .endpoint td {
   border: 1px solid #ccc;
@@ -72,6 +73,8 @@ pre {
   background-color: #f5f5f5;
   padding: 10px;
   border-radius: 5px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 /* code styles*/
@@ -87,6 +90,16 @@ pre {
 }
 
 .post {
-  color: #c7254e;
-  background-color: #f9f2f4;
+  color: #c7bc25;
+  background-color: #f9f9f2;
+}
+
+.put {
+  color: #2558c7;
+  background-color: #f2f2f9;
+}
+
+.delete {
+  color: #c73d25;
+  background-color: #f9f2f2;
 }
