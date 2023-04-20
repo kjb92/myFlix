@@ -26,6 +26,13 @@ let users = [
     firstName: 'Manja',
     lastName: 'Hoffner',
     favoriteMovies: ['The Lion King']
+  },
+  {
+    id: 3,
+    username: 'deleteme',
+    firstName: 'Delete',
+    lastName: 'Me',
+    favoriteMovies: []
   }
 ];
 
@@ -193,6 +200,20 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   if (user) {
     favoriteMovies = favoriteMovies.filter(movie => movie.title !== movieTitle);
     res.status(200).send(`${movieTitle} has been removed from user ${user.id}'s favorite movies`);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
+
+//DELETE: User 
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+
+  let user = users.find(user => user.id == id);
+
+  if (user) {
+    users = users.filter(user => user.id !== id);
+    res.status(200).send(`The user with username "${user.username}" and user-id "${user.id}" has been deleted`);
   } else {
     res.status(400).send('User not found');
   }
