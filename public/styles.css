@@ -74,36 +74,19 @@ pre {
   border-radius: 5px;
 }
 
-
-/* set height and width of sidebar */
-.sidebar {
-  height: 100%;
-  width: 200px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #f1f1f1;
-  overflow-x: hidden;
-  padding-top: 20px;
+/* code styles*/
+.http-method {
+    padding: 2px 4px;
+    font-size: 90%;
+    border-radius: 4px;
 }
 
-/* style for links in sidebar */
-.sidebar a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #000;
-  display: block;
+.get {
+  color: #c7254e;
+  background-color: #f9f2f4;
 }
 
-/* add hover effect to links */
-.sidebar a:hover {
-  color: #fff;
-  background-color: #555;
-}
-
-/* hide an element */
-.hidden {
-  display: none;
+.post {
+  color: #c7254e;
+  background-color: #f9f2f4;
 }
