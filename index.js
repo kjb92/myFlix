@@ -19,6 +19,13 @@ let users = [
     firstName: 'Kevin',
     lastName: 'Blumenstock',
     favoriteMovies: []
+  },
+  {
+    id: 2,
+    username: 'manjahoffner',
+    firstName: 'Manja',
+    lastName: 'Hoffner',
+    favoriteMovies: ['The Lion King']
   }
 ];
 
@@ -161,7 +168,7 @@ app.put('/users/:id', (req, res) => {
   }
 });
 
-//CREATE: New favorite movie
+//CREATE: Favorite movie
 app.post('/users/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params;
 
@@ -175,6 +182,21 @@ app.post('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
+//DELETE: Favorite movie
+app.delete('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find(user => user.id == id);
+  let favoriteMovies = user.favoriteMovies;
+  let movieToDelete = favoriteMovies.find(movie => movie.title === movieTitle);
+
+  if (user) {
+    favoriteMovies = favoriteMovies.filter(movie => movie.title !== movieTitle);
+    res.status(200).send(`${movieTitle} has been removed from user ${user.id}'s favorite movies`);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
 
 //MIDDLEWARE: handle uncaught errors
 app.use((err, req, res, next) => {
