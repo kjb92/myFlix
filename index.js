@@ -161,6 +161,19 @@ app.put('/users/:id', (req, res) => {
   }
 });
 
+//CREATE: New favorite movie
+app.post('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find(user => user.id == id);
+
+  if (user) {
+    user.favoriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to user ${user.id}'s favorite movies`);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
 
 
 //MIDDLEWARE: handle uncaught errors
