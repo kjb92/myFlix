@@ -17,7 +17,7 @@ Coming soon
 3. Return data about a genre (description) by name/title
 4. Return data about a director (bio, birth year, death year) by name
 5. Allow new users to register
-6. Allow users to update their user info
+6. Allow users to update their user info (username)
 7. Allow users to add a movie to their list of favorites
 8. Allow users to remove a movie from their list of favorites
 9. Allow existing users to deregister
