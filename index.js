@@ -146,6 +146,23 @@ app.post('/users', (req, res) => {
   }
 });
 
+//UPDATE: User Info (username)
+app.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedUser = req.body;
+
+  let user = users.find(user => user.id == id);
+
+  if (user) {
+    user.username = updatedUser.username;
+    res.status(200).json(user);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
+
+
+
 //MIDDLEWARE: handle uncaught errors
 app.use((err, req, res, next) => {
   console.error(err.stack);
