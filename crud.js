@@ -222,10 +222,10 @@ const createUser = (function(username, email, password, birthday) {
       print("Password required");
   } else {
     let newUser = db.users.insertOne({
-      username: username,
-      password: password,
-      email: email,
-      birthday: new Date(birthday),
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: new Date(birthday),
       favoriteMovies: []
     });
     print("New user created successfully", newUser);
