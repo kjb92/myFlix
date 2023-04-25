@@ -17,6 +17,7 @@ app.use(morgan('common'));
 // Middleware to serve static files from the "public" folder
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //VAR: Sample Users
 let users = [
