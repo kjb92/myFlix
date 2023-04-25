@@ -1,7 +1,13 @@
 const express = require('express'),
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
-uuid = require('uuid');
+uuid = require('uuid'),
+//Import mongoose and models.js
+mongoose = require('mongoose'),
+Models = require('./models.js'),
+Movies = Models.Movie,
+Users = Model.User;
+
 
 const app = express();
 
