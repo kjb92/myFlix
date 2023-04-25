@@ -8,6 +8,7 @@ Models = require('./models.js'),
 Movies = Models.Movie,
 Users = Model.User;
 
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
