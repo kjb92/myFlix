@@ -320,21 +320,21 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
 });
 
 //DELETE: User 1.0 -> deprecated 
-app.delete('/users/:id', (req, res) => {
-  const { id } = req.params;
+// app.delete('/users/:id', (req, res) => {
+//   const { id } = req.params;
 
-  let user = users.find(user => user.id == id);
+//   let user = users.find(user => user.id == id);
 
-  if (user) {
-    users = users.filter(user => user.id != id);
-    res.status(200).send(`The user with username "${user.username}" and user-id "${user.id}" has been deleted`);
-  } else {
-    res.status(400).send('User not found');
-  }
-});
+//   if (user) {
+//     users = users.filter(user => user.id != id);
+//     res.status(200).send(`The user with username "${user.username}" and user-id "${user.id}" has been deleted`);
+//   } else {
+//     res.status(400).send('User not found');
+//   }
+// });
 
 //DELETE: User 2.0 [MONGOOSE]
-app.put('/users/:Username', (req, res) => {
+app.delete('/users/:Username', (req, res) => {
   Users.findOneAndDelete({ Username: req.params.Username })
   .then((user) => {
     // Handle success
