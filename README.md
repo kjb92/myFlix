@@ -23,4 +23,4 @@ Coming soon
 9. Allow existing users to deregister
 
 ## Project dependencies 
-HTML5, CSS3, JavaScript ES6, Node v18.15.0, Express v4.18.2
+HTML5, CSS3, JavaScript ES6, Node v18.15.0, Express v4.18.2, Mongoose v7.0.5, Morgan v1.10.0
