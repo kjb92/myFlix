@@ -157,30 +157,15 @@ app.put('/users/:Username', (req, res) => {
   })
 });
 
-//CREATE: Favorite movie 1.0 -> deprecated 
-// app.post('/users/:id/:movieTitle', (req, res) => {
-//   const { id, movieTitle } = req.params;
-
-//   let user = users.find(user => user.id == id);
-
-//   if (user) {
-//     user.favoriteMovies.push(movieTitle);
-//     res.status(200).send(`${movieTitle} has been added to user ${user.id}'s favorite movies`);
-//   } else {
-//     res.status(400).send('User not found');
-//   }
-// });
-
-//CREATE: Favorite movie 2.0 [MONGOOSE]
+//CREATE: Favorite movie [MONGOOSE]
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, {
     $push: { favoriteMovies: req.params.MovieID }
   },
-  { new: true})
+  { new: true })
   .then((updatedUser) => {
     // Handle success
     res.status(200).json(updatedUser);
-    
   })
   .catch((error) => {
     // Handle error
