@@ -132,7 +132,7 @@ app.post('/users', (req, res) => {
   });
 });
 
-//UPDATE: User Info (username) [MONGOOSE]
+//UPDATE: User Info [MONGOOSE]
 app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
@@ -175,7 +175,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 //DELETE: Favorite movie [MONGOOSE]
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, {
     $pull: { favoriteMovies: req.params.MovieID }
   },
