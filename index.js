@@ -221,7 +221,7 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//DELETE: User 2.0 [MONGOOSE]
+//DELETE: User [MONGOOSE]
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndDelete({ Username: req.params.Username })
   .then((user) => {
@@ -230,6 +230,24 @@ app.delete('/users/:Username', (req, res) => {
       res.status(400).send(req.params.Username + " was not found");
     } else {
       res.status(200).send(req.params.Username + " was deleted");
+    } 
+  })
+  .catch((error) => {
+    // Handle error
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  })
+});
+
+//DELETE: Movie [MONGOOSE]
+app.delete('/movies/:MovieID', (req, res) => {
+  Movies.findOneAndDelete({ _id: req.params.MovieID })
+  .then((movie) => {
+    // Handle success
+    if (!movie) {
+      res.status(400).send("Movie was not found");
+    } else {
+      res.status(200).send("Movie was deleted");
     } 
   })
   .catch((error) => {
