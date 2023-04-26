@@ -117,7 +117,7 @@ app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
 
-//READ: Get all users
+//READ: Get all users [MONGOOSE]
 app.get('/users', (req, res) => {
   Users.find()
   .then((users) => {
@@ -129,7 +129,7 @@ app.get('/users', (req, res) => {
   });
 });
 
-//READ: Get a user by username
+//READ: Get a user by username [MONGOOSE]
 app.get('/users/:Username', (req, res) => {
   Users.findOne({Username: req.params.Username})
   .then((user) => {
@@ -192,7 +192,7 @@ app.get('/movies/director/:directorName', (req, res) => {
 //   }
 // });
 
-//CREATE: New User 2.0
+//CREATE: New User 2.0 [MONGOOSE]
 app.post('/users', (req, res) => {
   Users.findOne({Username: req.body.Username})
   .then((user) => {
@@ -234,7 +234,7 @@ app.post('/users', (req, res) => {
 //   }
 // });
 
-//UPDATE: User Info (username) 2.0
+//UPDATE: User Info (username) 2.0 [MONGOOSE]
 app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
@@ -259,7 +259,7 @@ app.put('/users/:Username', (req, res) => {
   })
 });
 
-//CREATE: Favorite movie
+//CREATE: Favorite movie 1.0 -> deprecated 
 app.post('/users/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params;
 
@@ -271,6 +271,24 @@ app.post('/users/:id/:movieTitle', (req, res) => {
   } else {
     res.status(400).send('User not found');
   }
+});
+
+//CREATE: Favorite movie 2.0 [MONGOOSE]
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username}, {
+    $push: { favoriteMovies: req.params.MovieID }
+  },
+  { new: true})
+  .then((updatedUser) => {
+    // Handle success
+    res.status(200).json(updatedUser);
+    
+  })
+  .catch((error) => {
+    // Handle error
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  })
 });
 
 //DELETE: Favorite movie
