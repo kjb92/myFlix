@@ -117,6 +117,18 @@ app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
 
+//READ: Get all users
+app.get('/users', (req, res) => {
+  Users.find()
+  .then((users) => {
+    res.status(200).json(users);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
 //READ: Get data about a single movie
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params;
