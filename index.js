@@ -319,7 +319,7 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//DELETE: User 
+//DELETE: User 1.0 -> deprecated 
 app.delete('/users/:id', (req, res) => {
   const { id } = req.params;
 
@@ -331,6 +331,24 @@ app.delete('/users/:id', (req, res) => {
   } else {
     res.status(400).send('User not found');
   }
+});
+
+//DELETE: User 2.0 [MONGOOSE]
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndDelete({ Username: req.params.Username })
+  .then((user) => {
+    // Handle success
+    if (!user) {
+      res.status(400).send(req.params.Username + "was not found");
+    } else {
+      res.status(200).send(req.params.Username + "was deleted");
+    } 
+  })
+  .catch((error) => {
+    // Handle error
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  })
 });
 
 //MIDDLEWARE: handle uncaught errors
