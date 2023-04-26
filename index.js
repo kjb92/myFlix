@@ -174,20 +174,21 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
   })
 });
 
-//DELETE: Favorite movie
-app.delete('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params;
-
-  let user = users.find(user => user.id == id);
-  let favoriteMovies = user.favoriteMovies;
-  let movieToDelete = favoriteMovies.find(movie => movie.title === movieTitle);
-
-  if (user) {
-    favoriteMovies = favoriteMovies.filter(movie => movie.title !== movieTitle);
-    res.status(200).send(`${movieTitle} has been removed from user ${user.id}'s favorite movies`);
-  } else {
-    res.status(400).send('User not found');
-  }
+//DELETE: Favorite movie [MONGOOSE]
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username}, {
+    $pull: { favoriteMovies: req.params.MovieID }
+  },
+  { new: true })
+  .then((updatedUser) => {
+    // Handle success
+    res.status(200).json(updatedUser);
+  })
+  .catch((error) => {
+    // Handle error
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  })
 });
 
 //DELETE: User [MONGOOSE]
