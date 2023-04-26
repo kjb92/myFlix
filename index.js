@@ -129,6 +129,18 @@ app.get('/users', (req, res) => {
   });
 });
 
+//READ: Get a user by username
+app.get('/users/:Username', (req, res) => {
+  Users.findOne({Username: req.params.Username})
+  .then((user) => {
+    res.status(200).json(user);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
 //READ: Get data about a single movie
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params;
