@@ -179,7 +179,7 @@ app.get('/movies/director/:directorName', (req, res) => {
   }
 });
 
-//CREATE: New User 1.0
+//CREATE: New User 1.0 -> deprecated
 // app.post('/users', (req, res) => {
 //   const newUser = req.body;
 
@@ -219,19 +219,44 @@ app.post('/users', (req, res) => {
   });
 });
 
-//UPDATE: User Info (username)
-app.put('/users/:id', (req, res) => {
-  const { id } = req.params;
-  const updatedUser = req.body;
+//UPDATE: User Info (username) 1.0 -> deprecated
+// app.put('/users/:id', (req, res) => {
+//   const { id } = req.params;
+//   const updatedUser = req.body;
 
-  let user = users.find(user => user.id == id);
+//   let user = users.find(user => user.id == id);
 
-  if (user) {
-    user.username = updatedUser.username;
-    res.status(200).json(user);
-  } else {
-    res.status(400).send('User not found');
-  }
+//   if (user) {
+//     user.username = updatedUser.username;
+//     res.status(200).json(user);
+//   } else {
+//     res.status(400).send('User not found');
+//   }
+// });
+
+//UPDATE: User Info (username) 2.0
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    {
+      Username: req.body.Username, 
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  }, 
+  { 
+    new: true 
+  })
+  .then((updatedUser) => {
+    // Handle success
+    res.status(200).json(updatedUser);
+    
+  })
+  .catch((error) => {
+    // Handle error
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  })
 });
 
 //CREATE: Favorite movie
