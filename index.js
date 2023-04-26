@@ -6,7 +6,9 @@ uuid = require('uuid'),
 mongoose = require('mongoose'),
 Models = require('./models.js'),
 Movies = Models.Movie,
-Users = Models.User;
+Users = Models.User,
+Genre = Models.Genre,
+Director = Models.Director;
 
 //Connect to local db
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -66,16 +68,16 @@ app.get('/users/:Username', (req, res) => {
   });
 });
 
-//READ: Get data about a single movie
-app.get('/movies/:title', (req, res) => {
-  const { title } = req.params;
-  const movie = movies.find( movie => movie.title === title);
-
-  if (movie) {
+//READ: Get data about a single movie 2.0 [MONGOOSE]
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne({Title: req.params.Title})
+  .then((movie) => {
     res.status(200).json(movie);
-  } else {
-    res.status(400).send('Movie not found');
-  }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
 });
 
 //READ: Return data about a genre (description) by name/title
