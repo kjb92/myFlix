@@ -6,7 +6,7 @@ uuid = require('uuid'),
 mongoose = require('mongoose'),
 Models = require('./models.js'),
 Movies = Models.Movie,
-Users = Model.User;
+Users = Models.User;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -155,17 +155,44 @@ app.get('/movies/director/:directorName', (req, res) => {
   }
 });
 
-//CREATE: New User
-app.post('/users', (req, res) => {
-  const newUser = req.body;
+//CREATE: New User 1.0
+// app.post('/users', (req, res) => {
+//   const newUser = req.body;
 
-  if (newUser.username) {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).json(newUser);
-  } else {
-    res.status(400).send('Users need usernames');
-  }
+//   if (newUser.username) {
+//     newUser.id = uuid.v4();
+//     users.push(newUser);
+//     res.status(201).json(newUser);
+//   } else {
+//     res.status(400).send('Users need usernames');
+//   }
+// });
+
+//CREATE: New User 2.0
+app.post('/users', (req, res) => {
+  Users.findOne({Username: req.body.Username})
+  .then((user) => {
+    if (user) {
+      return res.status(400).send(req.body.Username + "already exists");
+    } else {
+      Users
+        .create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+        .then((user) => {res.status(201).json(user)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send("Error: " + error);
+        })
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
 });
 
 //UPDATE: User Info (username)
