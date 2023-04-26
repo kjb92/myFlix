@@ -8,6 +8,7 @@ Models = require('./models.js'),
 Movies = Models.Movie,
 Users = Models.User;
 
+//Connect to local db
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
@@ -19,89 +20,6 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//VAR: Sample Users
-let users = [
-  {
-    id: 1,
-    username: 'kevinblumenstock',
-    firstName: 'Kevin',
-    lastName: 'Blumenstock',
-    favoriteMovies: []
-  },
-  {
-    id: 2,
-    username: 'manjahoffner',
-    firstName: 'Manja',
-    lastName: 'Hoffner',
-    favoriteMovies: ['The Lion King']
-  },
-  {
-    id: 3,
-    username: 'deleteme',
-    firstName: 'Delete',
-    lastName: 'Me',
-    favoriteMovies: []
-  }
-];
-
-//VAR: Sample Movies
-let movies = [
-  {
-    title: 'The Lion King',
-    description: 'A young lion prince flees his kingdom after the murder of his father. Years later, he returns to reclaim his throne.',
-    director: {
-      firstName: 'Roger',
-      lastName: 'Allers',
-      bio: 'Roger Allers is an American film director, screenwriter, storyboard artist, animator and voice actor. He is best known for co-directing the Disney animated feature The Lion King (1994).',
-      dateOfBirth: 1949,
-      dateOfDeath: undefined
-    },
-    genres: [
-      {
-        name: 'Animation',
-        description: 'Animated films are ones in which individual drawings, paintings, or illustrations are photographed frame by frame (stop-frame cinematography).'
-      },
-      {
-        name: 'Adventure',
-        description: 'Adventure films are often set in an historical period and may include adapted stories of historical or literary adventure heroes, kings, battles, rebellion, or piracy.'
-      },
-      {
-        name: 'Drama',
-        description: 'Drama films are a genre that relies on the emotional and relational development of realistic characters. They often feature intense character development, and sometimes rely on tragedy to evoke an emotional response from the audience.'
-      }
-    ],
-    imageURL: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wx3wpNh4LhRJ3h6yN3vSGPVepuo.jpg',
-    featured: true
-  },
-  {
-    title: 'Beauty and the Beast',
-    description: 'A young woman whose father has been imprisoned by a terrifying beast offers herself in his place, unaware that her captor is actually a prince, physically altered by a magic spell.',
-    director: {
-      firstName: 'Gary',
-      lastName: 'Trousdale',
-      bio: 'Gary A. Trousdale is an American film director, animator, and storyboard artist, known for directing and producing animated films at Disney.',
-      dateOfBirth: 1960,
-      dateOfDeath: undefined
-    },
-    genres: [
-      {
-        name: 'Animation',
-        description: 'Animated films are ones in which individual drawings, paintings, or illustrations are photographed frame by frame (stop-frame cinematography).'
-      },
-      {
-        name: 'Fantasy',
-        description: 'Fantasy films are a genre that uses magic and other supernatural forms as a primary element of plot, theme, or setting.'
-      },
-      {
-        name: 'Musical',
-        description: 'Musical films feature singing and dancing as a central element of the narrative, often accompanied by a range of different genres of music, such as jazz, rock, and classical music.'
-      }
-    ],
-    imageURL: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uOw5JD8IlD546feZ6oxbIjvN66P.jpg',
-    featured: false
-  },
-];
-
 
 //READ: Welcome-Screen
 app.get('/', (req, res) => {
@@ -111,11 +29,6 @@ app.get('/', (req, res) => {
 app.get('/documentation', (req, res) => {
   res.sendFile('documentation.html', { root: 'public' });
 });
-
-//READ: Get all movies 1.0 -> deprecated
-// app.get('/movies', (req, res) => {
-//   res.status(200).json(movies);
-// });
 
 //READ: Get all movies 2.0 [MONGOOSE]
 app.get('/movies', (req, res) => {
@@ -190,19 +103,6 @@ app.get('/movies/director/:directorName', (req, res) => {
     res.status(400).send('Director not found');
   }
 });
-
-//CREATE: New User 1.0 -> deprecated
-// app.post('/users', (req, res) => {
-//   const newUser = req.body;
-
-//   if (newUser.username) {
-//     newUser.id = uuid.v4();
-//     users.push(newUser);
-//     res.status(201).json(newUser);
-//   } else {
-//     res.status(400).send('Users need usernames');
-//   }
-// });
 
 //CREATE: New User 2.0 [MONGOOSE]
 app.post('/users', (req, res) => {
@@ -319,29 +219,15 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//DELETE: User 1.0 -> deprecated 
-// app.delete('/users/:id', (req, res) => {
-//   const { id } = req.params;
-
-//   let user = users.find(user => user.id == id);
-
-//   if (user) {
-//     users = users.filter(user => user.id != id);
-//     res.status(200).send(`The user with username "${user.username}" and user-id "${user.id}" has been deleted`);
-//   } else {
-//     res.status(400).send('User not found');
-//   }
-// });
-
 //DELETE: User 2.0 [MONGOOSE]
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndDelete({ Username: req.params.Username })
   .then((user) => {
     // Handle success
     if (!user) {
-      res.status(400).send(req.params.Username + "was not found");
+      res.status(400).send(req.params.Username + " was not found");
     } else {
-      res.status(200).send(req.params.Username + "was deleted");
+      res.status(200).send(req.params.Username + " was deleted");
     } 
   })
   .catch((error) => {
