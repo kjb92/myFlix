@@ -33,52 +33,79 @@
             <td>JSON</td>
             <td>
               <pre>
-                [
-                  {
-                    "title": "Text",
-                    "description": "Text",
-                    "director": {
-                        "firstName": "Text",
-                        "lastName": "Text",
-                        "bio": "Text",
-                        "dateOfBirth": number
-                    },
-                    "genres": [
-                        {
-                          "name": "Text",
-                          "description": "Text."
-                        },
-                        {
-                          "name": "Text",
-                          "description": "Text"
-                        }
-                    ],
-                    "imageURL": "URL",
-                    "featured": true
-                  },
-                  {
-                    "title": "Text",
-                    "description": "Text",
-                    "director": {
-                        "firstName": "Text",
-                        "lastName": "Text",
-                        "bio": "Text",
-                        "dateOfBirth": number
-                    },
-                    "genres": [
-                        {
-                          "name": "Text",
-                          "description": "Text."
-                        },
-                        {
-                          "name": "Text",
-                          "description": "Text"
-                        }
-                    ],
-                    "imageURL": "URL",
-                    "featured": true
-                  }
-                ]
+[
+  {
+    "_id": "64462d8ba5f5577c2975ae6f",
+    "Title": "The Lord of the Rings: The Fellowship of the Ring",
+    "Description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
+    "Genre": [
+        "64462577a5f5577c2975ae6d"
+    ],
+    "Director": "644624a0a5f5577c2975ae65",
+    "ImagePath": "lotr-fellowship-of-the-ring.jpg",
+    "Featured": false,
+  },
+  {
+    "_id": "64462ea9a5f5577c2975ae70",
+    "Title": "The Lord of the Rings: The Two Towers",
+    "Description": "Frodo and Sam continue their journey to Mordor to destroy the One Ring, while Aragorn, Legolas, and Gimli prepare for a final battle against Saruman and his army of orcs at the fortress of Helm's Deep.",
+    "Genre": [
+        "64462577a5f5577c2975ae6d"
+    ],
+    "Director": "644624a0a5f5577c2975ae65",
+    "ImagePath": "lotr-two-towers.jpg",
+    "Featured": false
+  }
+]
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div> 
+      <!-- GET all users -->
+      <div class="endpoint">
+        <h2><span class="http-method get">GET</span> /users</h2>
+        <p>Return a list of ALL users</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+[
+  {
+    "_id": "64464413a5f5577c2975ae87",
+    "Username": "test1",
+    "Password": "12345",
+    "Email": "test1@test.com",
+    "Birthday": "1992-12-02T00:00:00.000Z",
+    "favoriteMovies": [
+        "64462f40a5f5577c2975ae7b"
+    ]
+  },
+  {
+    "_id": "64464413a5f5577c2975ae88",
+    "Username": "test2",
+    "Password": "67890",
+    "Email": "test2@test.com",
+    "Birthday": "1992-12-10T00:00:00.000Z",
+    "favoriteMovies": []
+  }
+]
               </pre>
             </td>
           </tr>
@@ -87,7 +114,7 @@
       <!-- GET movie data about a single movie -->
       <div class="endpoint">
         <h2><span class="http-method get">GET</span> /movies/{title}</h2>
-        <p>Return data (description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user</p>
+        <p>Return data (title, description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user</p>
         <table>
           <tr>
             <th>Parameter</th>
@@ -116,39 +143,71 @@
             <td>JSON</td>
             <td>
               <pre>
-                [
-                  {
-                    "title": "Text",
-                    "description": "Text",
-                    "director": {
-                        "firstName": "Text",
-                        "lastName": "Text",
-                        "bio": "Text",
-                        "dateOfBirth": number
-                    },
-                    "genres": [
-                        {
-                          "name": "Text",
-                          "description": "Text."
-                        },
-                        {
-                          "name": "Text",
-                          "description": "Text"
-                        }
-                    ],
-                    "imageURL": "URL",
-                    "featured": true
-                  }
-                ]
+{
+  "_id": "64462d8ba5f5577c2975ae6f",
+  "Title": "The Lord of the Rings: The Fellowship of the Ring",
+  "Description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
+  "Genre": [
+      "64462577a5f5577c2975ae6d"
+  ],
+  "Director": "644624a0a5f5577c2975ae65",
+  "ImagePath": "lotr-fellowship-of-the-ring.jpg",
+  "Featured": false,
+}
               </pre>
             </td>
           </tr>
         </table>
       </div>
-      <!-- GET genre description by genre name -->
+      <!-- GET user data about a single user -->
+      <div class="endpoint">
+        <h2><span class="http-method get">GET</span> /users/{username}</h2>
+        <p>Return data about a single user by username</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER title -->
+          <tr>
+            <td>title</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "Frozen", "The Lion King"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+{
+  "_id": "64491747cbbcaca8d7c4e944",
+  "Username": "test1",
+  "Password": "12345",
+  "Email": "test1@test.com",
+  "favoriteMovies": [],
+  "__v": 0
+}
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- GET data about a genre by genre name -->
       <div class="endpoint">
         <h2><span class="http-method get">GET</span> /movies/genre/{genreName}</h2>
-        <p>Return data about a genre (description) by name/title</p>
+        <p>Return data about a genre by genre name</p>
         <table>
           <tr>
             <th>Parameter</th>
@@ -177,19 +236,20 @@
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "name": "Animation",
-                  "description": "..."
-                }
+{
+  "_id": "64462577a5f5577c2975ae6d",
+  "Name": "Action",
+  "Description": "Typically associated with movies that involve a lot of physical activity, such as fighting, chasing, and shooting, as well as films that feature a lot of explosions and special effects."
+}
               </pre>
             </td>
           </tr>
         </table>
       </div>
-      <!-- GET director by name -->
+      <!-- GET data about a director by director name -->
       <div class="endpoint">
         <h2><span class="http-method get">GET</span> /movies/director/{directorName}</h2>
-        <p>Return data about a director (bio, birth year, death year) by name</p>
+        <p>Return data about a director (name, bio, birth year, death year) by director name</p>
         <table>
           <tr>
             <th>Parameter</th>
@@ -201,7 +261,7 @@
             <td>directorName</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "Roger Allers"</pre>
+              <pre>e.g. "Peter Jackson"</pre>
             </td>
           </tr>
           <!-- REQUEST body data -->
@@ -218,12 +278,13 @@
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "firstName": "Roger",
-                  "lastName": "Allers",
-                  "bio": "Roger Allers is an American film director, screenwriter, storyboard artist, animator and voice actor. He is best known for co-directing the Disney animated feature The Lion King (1994).",
-                  "dateOfBirth": 1949
-                }
+{
+  "_id": "644624a0a5f5577c2975ae65",
+  "Name": "Peter Jackson",
+  "Bio": "Another bio text",
+  "Birth": "1961-01-01T00:00:00.000Z",
+  "Death": null
+}
               </pre>
             </td>
           </tr>
@@ -245,12 +306,12 @@
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "username": "marymason",
-                  "firstName": "Mary",
-                  "lastName": "Mason",
-                  "favoriteMovies":[]
-                }
+{
+  "Username": "marymason2",
+  "Email": "mary@test.com",
+  "Password": "testpassword12345",
+  "Birthday": "2000-01-01"
+}
             </pre>
             </td>
           </tr>
@@ -260,13 +321,15 @@
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "username": "marymason",
-                  "firstName": "Mary",
-                  "lastName": "Mason",
-                  "favoriteMovies": [],
-                  "id": "8daa9319"
-              }
+{
+  "Username": "marymason2",
+  "Password": "testpassword12345",
+  "Email": "mary@test.com",
+  "Birthday": "2000-01-01T00:00:00.000Z",
+  "favoriteMovies": [],
+  "_id": "644926b635e98a9cb61d9b96",
+  "__v": 0
+}
               </pre>
             </td>
           </tr>
@@ -274,8 +337,8 @@
       </div>   
       <!-- POST add a new favorite movie -->
       <div class="endpoint">
-        <h2><span class="http-method post">POST</span> /users/{id}/{movieTitle}</h2>
-        <p>Allow users to add a movie to their list of favorites</p>
+        <h2><span class="http-method post">POST</span> /users/{username}/movies/{movieID}</h2>
+        <p>Allow users to add movies to their list of favorite movies</p>
         <table>
           <tr>
             <th>Parameter</th>
@@ -284,18 +347,18 @@
           </tr>
           <!-- PARAMETER userID -->
           <tr>
-            <td>id</td>
+            <td>username</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "8daa9319"</pre>
+              <pre>e.g. "marymason"</pre>
             </td>
           </tr>
           <!-- PARAMETER movieTitle -->
           <tr>
-            <td>movieTitle</td>
+            <td>movieID</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "The Lion King"</pre>
+              <pre>e.g. "64462f40a5f5577c2975ae7b"</pre>
             </td>
           </tr>
           <!-- REQUEST body data -->
@@ -311,14 +374,25 @@
             <td>Response body data format</td>
             <td>Text</td>
             <td>
-              <pre>The Lion King has been added to user 1's favorite movies</pre>
+              <pre>
+{
+  "_id": "64491747cbbcaca8d7c4e944",
+  "Username": "marymason",
+  "Password": "testpassword12345",
+  "Email": "mary@test.com",
+  "favoriteMovies": [
+      "64462f40a5f5577c2975ae7b"
+  ],
+  "__v": 0
+}              
+              </pre>
             </td>
           </tr>
         </table>
       </div>    
       <!-- PUT update user info (username) -->
       <div class="endpoint">
-        <h2><span class="http-method put">PUT</span> /users/{id}</h2>
+        <h2><span class="http-method put">PUT</span> /users/{username}</h2>
         <p>Allow users to update their user info</p>
         <table>
           <tr>
@@ -328,10 +402,10 @@
           </tr>
           <!-- PARAMETER userID -->
           <tr>
-            <td>id</td>
+            <td>username</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "1"</pre>
+              <pre>e.g. "marymason"</pre>
             </td>
           </tr>
           <!-- REQUEST body data -->
@@ -340,9 +414,9 @@
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "username": "kevin-updated"
-                }
+{
+  "Username": "mary-updated"
+}
               </pre>
             </td>
           </tr>
@@ -352,15 +426,16 @@
             <td>JSON</td>
             <td>
               <pre>
-                {
-                  "id": 1,
-                  "username": "kevin-updated",
-                  "firstName": "Kevin",
-                  "lastName": "Blumenstock",
-                  "favoriteMovies": [
-                      "The Lion King"
-                  ]
-                }              
+{
+  "_id": "64491747cbbcaca8d7c4e944",
+  "Username": "mary-updated",
+  "Password": "testpassword12345",
+  "Email": "mary@test.com",
+  "favoriteMovies": [
+      "64462f40a5f5577c2975ae7b"
+  ],
+  "__v": 0
+}            
             </pre>
             </td>
           </tr>
@@ -368,8 +443,8 @@
       </div>  
       <!-- DELETE remove a favorite movie -->
       <div class="endpoint">
-        <h2><span class="http-method delete">DELETE</span> /users/{id}/{movieTitle}</h2>
-        <p>Allow users to remove a movie from their list of favorites</p>
+        <h2><span class="http-method delete">DELETE</span> /users/{username}/movies/{movieID}</h2>
+        <p>Allow users to remove a movie from their list of favorite movies</p>
         <table>
           <tr>
             <th>Parameter</th>
@@ -378,18 +453,18 @@
           </tr>
           <!-- PARAMETER userID -->
           <tr>
-            <td>id</td>
+            <td>username</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "2"</pre>
+              <pre>e.g. "marymason"</pre>
             </td>
           </tr>
           <!-- PARAMETER movieTitle -->
           <tr>
-            <td>movieTitle</td>
+            <td>movieID</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "The Lion King"</pre>
+              <pre>e.g. "64462f40a5f5577c2975ae7b"</pre>
             </td>
           </tr>
           <!-- REQUEST body data -->
@@ -405,15 +480,24 @@
             <td>Response body data format</td>
             <td>Text</td>
             <td>
-              <pre>The Lion King has been removed from user 2's favorite movies</pre>
+              <pre>
+{
+  "_id": "64491747cbbcaca8d7c4e944",
+  "Username": "marymason",
+  "Password": "testpassword12345",
+  "Email": "mary@test.com",
+  "favoriteMovies": [],
+  "__v": 0
+}
+              </pre>
             </td>
           </tr>
         </table>
       </div>     
       <!-- DELETE a user -->
       <div class="endpoint">
-        <h2><span class="http-method delete">DELETE</span> /users/{id}</h2>
-        <p>Allow existing users to deregister</p>
+        <h2><span class="http-method delete">DELETE</span> /users/{username}</h2>
+        <p>Allow existing users to deregister and delete their user account</p>
         <table>
           <tr>
             <th>Parameter</th>
@@ -422,10 +506,10 @@
           </tr>
           <!-- PARAMETER userID -->
           <tr>
-            <td>id</td>
+            <td>username</td>
             <td>Text</td>
             <td>
-              <pre>e.g. "3"</pre>
+              <pre>e.g. "marymason"</pre>
             </td>
           </tr>
           <!-- REQUEST body data -->
@@ -441,11 +525,47 @@
             <td>Response body data format</td>
             <td>Text</td>
             <td>
-              <pre>The user with username "deleteme" and user-id "3" has been deleted</pre>
+              <pre>marymason was deleted</pre>
             </td>
           </tr>
         </table>
-      </div>     
+      </div>  
+      <!-- DELETE a movie -->
+      <div class="endpoint">
+        <h2><span class="http-method delete">DELETE</span> /movies/{movieID}</h2>
+        <p>Allow a user to delete a movie from the movie database</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER userID -->
+          <tr>
+            <td>movieID</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "644615424368d83865506b71"</pre>
+            </td>
+          </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>Text</td>
+            <td>
+              <pre>Movie was deleted</pre>
+            </td>
+          </tr>
+        </table>
+      </div>  
     </div>
   </body>  
 </html>
