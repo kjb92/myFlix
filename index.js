@@ -94,7 +94,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //READ: Return data about a director by name [MONGOOSE]
-app.get('/movies/directors/:directorName', (req, res) => {
+app.get('/movies/director/:directorName', (req, res) => {
   Director.findOne({Name: req.params.directorName})
   .then((director) => {
     res.status(200).json(director);
