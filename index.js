@@ -112,9 +112,21 @@ app.get('/documentation', (req, res) => {
   res.sendFile('documentation.html', { root: 'public' });
 });
 
-//READ: Get all movies
+//READ: Get all movies 1.0 -> deprecated
+// app.get('/movies', (req, res) => {
+//   res.status(200).json(movies);
+// });
+
+//READ: Get all movies 2.0 [MONGOOSE]
 app.get('/movies', (req, res) => {
-  res.status(200).json(movies);
+  Movies.find()
+  .then((movies) => {
+    res.status(200).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
 //READ: Get all users [MONGOOSE]
