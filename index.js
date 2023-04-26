@@ -23,16 +23,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-//READ: Welcome-Screen
+//READ: Welcome-Screen [MONGOOSE]
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
 });
 
+//READ: Documentation [MONGOOSE]
 app.get('/documentation', (req, res) => {
   res.sendFile('documentation.html', { root: 'public' });
 });
 
-//READ: Get all movies 2.0 [MONGOOSE]
+//READ: Get all movies [MONGOOSE]
 app.get('/movies', (req, res) => {
   Movies.find()
   .then((movies) => {
@@ -68,7 +69,7 @@ app.get('/users/:Username', (req, res) => {
   });
 });
 
-//READ: Get data about a single movie 2.0 [MONGOOSE]
+//READ: Get data about a single movie [MONGOOSE]
 app.get('/movies/:Title', (req, res) => {
   Movies.findOne({Title: req.params.Title})
   .then((movie) => {
@@ -80,33 +81,31 @@ app.get('/movies/:Title', (req, res) => {
   });
 });
 
-//READ: Return data about a genre (description) by name/title
+//READ: Return data about a genre by name/title [MONGOOSE]
 app.get('/movies/genre/:genreName', (req, res) => {
-  const { genreName } = req.params;
-  const genre = movies
-    .filter(movie => movie.genres.some(genre => genre.name === genreName))
-    .map(movie => movie.genres.find(genre => genre.name === genreName));
-
-  if (genre) {
+  Genre.findOne({Name: req.params.genreName})
+  .then((genre) => {
     res.status(200).json(genre);
-  } else {
-    res.status(400).send('Genre not found');
-  }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
 });
 
-//READ: Return data about a director by name
-app.get('/movies/director/:directorName', (req, res) => {
-  const { directorName } = req.params;
-  const director = movies.find(movie => movie.director.firstName + " " + movie.director.lastName === directorName)?.director;
-
-  if (director) {
+//READ: Return data about a director by name [MONGOOSE]
+app.get('/movies/directors/:directorName', (req, res) => {
+  Director.findOne({Name: req.params.directorName})
+  .then((director) => {
     res.status(200).json(director);
-  } else {
-    res.status(400).send('Director not found');
-  }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
 });
 
-//CREATE: New User 2.0 [MONGOOSE]
+//CREATE: New User [MONGOOSE]
 app.post('/users', (req, res) => {
   Users.findOne({Username: req.body.Username})
   .then((user) => {
@@ -133,22 +132,7 @@ app.post('/users', (req, res) => {
   });
 });
 
-//UPDATE: User Info (username) 1.0 -> deprecated
-// app.put('/users/:id', (req, res) => {
-//   const { id } = req.params;
-//   const updatedUser = req.body;
-
-//   let user = users.find(user => user.id == id);
-
-//   if (user) {
-//     user.username = updatedUser.username;
-//     res.status(200).json(user);
-//   } else {
-//     res.status(400).send('User not found');
-//   }
-// });
-
-//UPDATE: User Info (username) 2.0 [MONGOOSE]
+//UPDATE: User Info (username) [MONGOOSE]
 app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
@@ -174,18 +158,18 @@ app.put('/users/:Username', (req, res) => {
 });
 
 //CREATE: Favorite movie 1.0 -> deprecated 
-app.post('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params;
+// app.post('/users/:id/:movieTitle', (req, res) => {
+//   const { id, movieTitle } = req.params;
 
-  let user = users.find(user => user.id == id);
+//   let user = users.find(user => user.id == id);
 
-  if (user) {
-    user.favoriteMovies.push(movieTitle);
-    res.status(200).send(`${movieTitle} has been added to user ${user.id}'s favorite movies`);
-  } else {
-    res.status(400).send('User not found');
-  }
-});
+//   if (user) {
+//     user.favoriteMovies.push(movieTitle);
+//     res.status(200).send(`${movieTitle} has been added to user ${user.id}'s favorite movies`);
+//   } else {
+//     res.status(400).send('User not found');
+//   }
+// });
 
 //CREATE: Favorite movie 2.0 [MONGOOSE]
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
