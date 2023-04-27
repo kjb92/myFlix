@@ -52,8 +52,8 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
   });
 });
 
-//READ: Get all users [MONGOOSE]
-app.get('/users', (req, res) => {
+//READ: Get all users [MONGOOSE + AUTH]
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
   .then((users) => {
     res.status(200).json(users);
@@ -64,8 +64,8 @@ app.get('/users', (req, res) => {
   });
 });
 
-//READ: Get a user by username [MONGOOSE]
-app.get('/users/:Username', (req, res) => {
+//READ: Get a user by username [MONGOOSE + AUTH]
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({Username: req.params.Username})
   .then((user) => {
     res.status(200).json(user);
@@ -76,8 +76,8 @@ app.get('/users/:Username', (req, res) => {
   });
 });
 
-//READ: Get data about a single movie [MONGOOSE]
-app.get('/movies/:Title', (req, res) => {
+//READ: Get data about a single movie [MONGOOSE + AUTH]
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({Title: req.params.Title})
   .then((movie) => {
     res.status(200).json(movie);
@@ -88,8 +88,8 @@ app.get('/movies/:Title', (req, res) => {
   });
 });
 
-//READ: Return data about a genre by name/title [MONGOOSE]
-app.get('/movies/genre/:genreName', (req, res) => {
+//READ: Return data about a genre by name/title [MONGOOSE + AUTH]
+app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
   Genre.findOne({Name: req.params.genreName})
   .then((genre) => {
     res.status(200).json(genre);
@@ -100,8 +100,8 @@ app.get('/movies/genre/:genreName', (req, res) => {
   });
 });
 
-//READ: Return data about a director by name [MONGOOSE]
-app.get('/movies/director/:directorName', (req, res) => {
+//READ: Return data about a director by name [MONGOOSE + AUTH]
+app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
   Director.findOne({Name: req.params.directorName})
   .then((director) => {
     res.status(200).json(director);
@@ -112,8 +112,8 @@ app.get('/movies/director/:directorName', (req, res) => {
   });
 });
 
-//CREATE: New User [MONGOOSE]
-app.post('/users', (req, res) => {
+//CREATE: New User [MONGOOSE + AUTH]
+app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({Username: req.body.Username})
   .then((user) => {
     if (user) {
@@ -139,8 +139,8 @@ app.post('/users', (req, res) => {
   });
 });
 
-//UPDATE: User Info [MONGOOSE]
-app.put('/users/:Username', (req, res) => {
+//UPDATE: User Info [MONGOOSE + AUTH]
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username, 
@@ -164,8 +164,8 @@ app.put('/users/:Username', (req, res) => {
   })
 });
 
-//CREATE: Favorite movie [MONGOOSE]
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
+//CREATE: Favorite movie [MONGOOSE + AUTH]
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, {
     $push: { favoriteMovies: req.params.MovieID }
   },
@@ -181,8 +181,8 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
   })
 });
 
-//DELETE: Favorite movie [MONGOOSE]
-app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+//DELETE: Favorite movie [MONGOOSE + AUTH]
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, {
     $pull: { favoriteMovies: req.params.MovieID }
   },
@@ -198,8 +198,8 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
   })
 });
 
-//DELETE: User [MONGOOSE]
-app.delete('/users/:Username', (req, res) => {
+//DELETE: User [MONGOOSE + AUTH]
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndDelete({ Username: req.params.Username })
   .then((user) => {
     // Handle success
@@ -216,8 +216,8 @@ app.delete('/users/:Username', (req, res) => {
   })
 });
 
-//DELETE: Movie [MONGOOSE]
-app.delete('/movies/:MovieID', (req, res) => {
+//DELETE: Movie [MONGOOSE + AUTH]
+app.delete('/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOneAndDelete({ _id: req.params.MovieID })
   .then((movie) => {
     // Handle success
