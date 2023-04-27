@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let auth = require('./auth') (app);
 
 //Import passport module
-const password = require('passport');
+const passport = require('passport');
 require ('./passport');
 
 
