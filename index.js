@@ -22,6 +22,13 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Import auth.js
+let auth = require('./auth') (app);
+
+//Import passport module
+const password = require('passport');
+require ('./passport');
+
 
 //READ: Welcome-Screen [MONGOOSE]
 app.get('/', (req, res) => {
