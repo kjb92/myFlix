@@ -40,15 +40,15 @@ app.get('/documentation', (req, res) => {
   res.sendFile('documentation.html', { root: 'public' });
 });
 
-//READ: Get all movies [MONGOOSE]
-app.get('/movies', (req, res) => {
+//READ: Get all movies [MONGOOSE + AUTH]
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(200).json(movies);
   })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error: " + err);
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send("Error: " + error);
   });
 });
 
