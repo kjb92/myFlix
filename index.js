@@ -23,11 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Import auth.js
-let auth = require('./auth') (app);
+let auth = require('./auth')(app);
 
 //Import passport module
 const passport = require('passport');
-require ('./passport');
+require('./passport');
 
 
 //READ: Welcome-Screen [MONGOOSE]
