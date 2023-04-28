@@ -89,7 +89,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
 });
 
 //READ: Get all movies related to a certain genre [MONGOOSE + AUTH]
-app.get('/movies/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
   let genreName = req.params.genreName;
 
   // Find the genre with the given genre name
@@ -100,7 +100,7 @@ app.get('/movies/:genreName', passport.authenticate('jwt', { session: false }), 
       }
 
       // Find all the movies that belong to the genre with the given genre ID
-      Movies.find({ Genre: { $in: [ mongoose.Types.ObjectId(genre._id) ] } })
+      Movies.find({ Genre: { $in: [ new mongoose.Types.ObjectId(genre._id) ] } })
         .then((movies) => {
           if (!movies.length) {
             return res.status(404).send('No movies found for the given genre.');
@@ -118,9 +118,8 @@ app.get('/movies/:genreName', passport.authenticate('jwt', { session: false }), 
     });
 });
 
-
 //READ: Return data about a genre by name/title [MONGOOSE + AUTH]
-app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/genre/:genreName/details', passport.authenticate('jwt', { session: false }), (req, res) => {
   Genre.findOne({Name: req.params.genreName})
   .then((genre) => {
     res.status(200).json(genre);
@@ -131,8 +130,38 @@ app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: fals
   });
 });
 
-//READ: Return data about a director by name [MONGOOSE + AUTH]
+//READ: Get all movies related to a certain director [MONGOOSE + AUTH]
 app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
+  let directorName = req.params.directorName;
+
+  // Find the genre with the given director name
+  Director.findOne({ Name: directorName })
+    .then((director) => {
+      if (!director) {
+        return res.status(404).send('Director not found.');
+      }
+
+      // Find all the movies that belong to the director with the given director ID
+      Movies.find({ Director: new mongoose.Types.ObjectId(director._id) })
+        .then((movies) => {
+          if (!movies.length) {
+            return res.status(404).send('No movies found for the given director.');
+          }
+          res.json(movies);
+        })
+        .catch((error) => {
+          console.error('Error finding movies:', error);
+          res.status(500).send('Internal server error.');
+        });
+    })
+    .catch((error) => {
+      console.error('Error finding director:', error);
+      res.status(500).send('Internal server error.');
+    });
+});
+
+//READ: Return data about a director by name [MONGOOSE + AUTH]
+app.get('/movies/director/:directorName/details', passport.authenticate('jwt', { session: false }), (req, res) => {
   Director.findOne({Name: req.params.directorName})
   .then((director) => {
     res.status(200).json(director);
