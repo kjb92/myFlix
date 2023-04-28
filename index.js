@@ -88,6 +88,37 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
   });
 });
 
+//READ: Get all movies related to a certain genre [MONGOOSE + AUTH]
+app.get('/movies/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
+  let genreName = req.params.genreName;
+
+  // Find the genre with the given genre name
+  Genre.findOne({ Name: genreName })
+    .then((genre) => {
+      if (!genre) {
+        return res.status(404).send('Genre not found.');
+      }
+
+      // Find all the movies that belong to the genre with the given genre ID
+      Movies.find({ Genre: { $in: [ mongoose.Types.ObjectId(genre._id) ] } })
+        .then((movies) => {
+          if (!movies.length) {
+            return res.status(404).send('No movies found for the given genre.');
+          }
+          res.json(movies);
+        })
+        .catch((error) => {
+          console.error('Error finding movies:', error);
+          res.status(500).send('Internal server error.');
+        });
+    })
+    .catch((error) => {
+      console.error('Error finding genre:', error);
+      res.status(500).send('Internal server error.');
+    });
+});
+
+
 //READ: Return data about a genre by name/title [MONGOOSE + AUTH]
 app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
   Genre.findOne({Name: req.params.genreName})
