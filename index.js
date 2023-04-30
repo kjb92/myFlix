@@ -1,14 +1,18 @@
 const express = require('express'),
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
-uuid = require('uuid'),
+uuid = require('uuid');
+
 //Import mongoose and models.js
-mongoose = require('mongoose'),
+const = mongoose = require('mongoose'),
 Models = require('./models.js'),
 Movies = Models.Movie,
 Users = Models.User,
 Genre = Models.Genre,
 Director = Models.Director;
+
+//Import express-validator
+const { check, validationResult } = require('express-validator');
 
 //Connect to local db
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
