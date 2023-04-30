@@ -22,6 +22,10 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Import CORS
+const cors = require('cors');
+app.use(cors()); //allows access from all origins
+
 //Import auth.js
 let auth = require('./auth')(app);
 
