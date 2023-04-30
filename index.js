@@ -4,7 +4,7 @@ bodyParser = require('body-parser'),
 uuid = require('uuid');
 
 //Import mongoose and models.js
-const = mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
 Models = require('./models.js'),
 Movies = Models.Movie,
 Users = Models.User,
@@ -17,6 +17,7 @@ const { check, validationResult } = require('express-validator');
 //Connect to local db
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
+//Assign express to variable "app"
 const app = express();
 
 //MIDDLEWARE: log all server requests
@@ -192,8 +193,21 @@ app.get('/movies/director/:directorName/details', passport.authenticate('jwt', {
 });
 
 //CREATE: New User [MONGOOSE]
-app.post('/users', (req, res) => {
-  let hashedPassword = Users.hashPassword(req.body.Password);
+app.post('/users',
+  //Validation Rules
+  [check('Username', 'Username is required').isLength({min: 5}),
+      check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+      check('Password', 'Password is required').not().isEmpty(),
+      check('Email', 'Email does not appear to be valid').isEmail()
+    ],
+  (req, res) => {
+  // Check the validation object for errors
+   let errors = validationResult(req);
+
+   if (!errors.isEmpty()) {
+     return res.status(422).json({ errors: errors.array() });
+   }
+  // Lookup user
   Users.findOne({Username: req.body.Username})
   .then((user) => {
     if (user) {
@@ -202,7 +216,7 @@ app.post('/users', (req, res) => {
       Users
         .create({
           Username: req.body.Username,
-          Password: hashedPassword,
+          Password: Users.hashPassword(req.body.Password), // Hash password
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
