@@ -15,7 +15,9 @@ Director = Models.Director;
 const { check, validationResult } = require('express-validator');
 
 //Connect to local db
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+//Connect to MongoDB Atlas (Online)
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Assign express to variable "app"
 const app = express();
