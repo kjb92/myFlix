@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken'),
 
 require('./passport'); // Your local passport file
 
+//Import express-validator
+const { check, validationResult } = require('express-validator');
 
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
