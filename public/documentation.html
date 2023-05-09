@@ -36,81 +36,29 @@
 [
   {
     "_id": "64462d8ba5f5577c2975ae6f",
-    "Title": "The Lord of the Rings: The Fellowship of the Ring",
-    "Description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
-    "Genre": [
-        "64462577a5f5577c2975ae6d"
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
+    "genre": [
+        {
+          "name": "Action",
+          "description": "Action movies usually involve high-energy, physical stunts and chases, and may or may not have a lot of dialogue."
+        }
     ],
-    "Director": "644624a0a5f5577c2975ae65",
-    "ImagePath": "lotr-fellowship-of-the-ring.jpg",
-    "Featured": false,
-  },
-  {
-    "_id": "64462ea9a5f5577c2975ae70",
-    "Title": "The Lord of the Rings: The Two Towers",
-    "Description": "Frodo and Sam continue their journey to Mordor to destroy the One Ring, while Aragorn, Legolas, and Gimli prepare for a final battle against Saruman and his army of orcs at the fortress of Helm's Deep.",
-    "Genre": [
-        "64462577a5f5577c2975ae6d"
-    ],
-    "Director": "644624a0a5f5577c2975ae65",
-    "ImagePath": "lotr-two-towers.jpg",
-    "Featured": false
+    "director": {
+      "name": "Peter Jackson",
+      "bio": "Peter Jackson is a New Zealand film director, producer, and screenwriter. He is best known for his epic adaptations of J. R. R. Tolkien\'s novels, The Lord of the Rings trilogy and The Hobbit trilogy, both of which were filmed in his native New Zealand.",
+      "birth": "1963",
+      "death": ""
+    },
+    "imagePath": "lotr-fellowship-of-the-ring.jpg",
+    "featured": false,
   }
 ]
               </pre>
             </td>
           </tr>
         </table>
-      </div> 
-      <!-- GET all users -->
-      <div class="endpoint">
-        <h2><span class="http-method get">GET</span> /users</h2>
-        <p>Return a list of ALL users</p>
-        <table>
-          <tr>
-            <th>Parameter</th>
-            <th>Type</th>
-            <th>Description</th>
-          </tr>
-          <!-- REQUEST body data -->
-          <tr>
-            <td>Request body data format</td>
-            <td>JSON</td>
-            <td>
-              <pre>None</pre>
-            </td>
-          </tr>
-          <!-- RESPONSE body data -->
-          <tr>
-            <td>Response body data format</td>
-            <td>JSON</td>
-            <td>
-              <pre>
-[
-  {
-    "_id": "64464413a5f5577c2975ae87",
-    "Username": "test1",
-    "Password": "12345",
-    "Email": "test1@test.com",
-    "Birthday": "1992-12-02T00:00:00.000Z",
-    "favoriteMovies": [
-        "64462f40a5f5577c2975ae7b"
-    ]
-  },
-  {
-    "_id": "64464413a5f5577c2975ae88",
-    "Username": "test2",
-    "Password": "67890",
-    "Email": "test2@test.com",
-    "Birthday": "1992-12-10T00:00:00.000Z",
-    "favoriteMovies": []
-  }
-]
-              </pre>
-            </td>
-          </tr>
-        </table>
-      </div>      
+      </div>    
       <!-- GET movie data about a single movie -->
       <div class="endpoint">
         <h2><span class="http-method get">GET</span> /movies/{title}</h2>
@@ -145,14 +93,22 @@
               <pre>
 {
   "_id": "64462d8ba5f5577c2975ae6f",
-  "Title": "The Lord of the Rings: The Fellowship of the Ring",
-  "Description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
-  "Genre": [
-      "64462577a5f5577c2975ae6d"
+  "title": "The Lord of the Rings: The Fellowship of the Ring",
+  "description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
+  "genre": [
+      {
+        "name": "Action",
+        "description": "Action movies usually involve high-energy, physical stunts and chases, and may or may not have a lot of dialogue."
+      }
   ],
-  "Director": "644624a0a5f5577c2975ae65",
-  "ImagePath": "lotr-fellowship-of-the-ring.jpg",
-  "Featured": false,
+  "director": {
+    "name": "Peter Jackson",
+    "bio": "Peter Jackson is a New Zealand film director, producer, and screenwriter. He is best known for his epic adaptations of J. R. R. Tolkien\'s novels, The Lord of the Rings trilogy and The Hobbit trilogy, both of which were filmed in his native New Zealand.",
+    "birth": "1963",
+    "death": ""
+  },
+  "imagePath": "lotr-fellowship-of-the-ring.jpg",
+  "featured": false,
 }
               </pre>
             </td>
@@ -194,25 +150,22 @@
 [
   {
     "_id": "64462d8ba5f5577c2975ae6f",
-    "Title": "The Lord of the Rings: The Fellowship of the Ring",
-    "Description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
-    "Genre": [
-        "64462577a5f5577c2975ae6d"
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
+    "genre": [
+        {
+          "name": "Action",
+          "description": "Action movies usually involve high-energy, physical stunts and chases, and may or may not have a lot of dialogue."
+        }
     ],
-    "Director": "644624a0a5f5577c2975ae65",
-    "ImagePath": "lotr-fellowship-of-the-ring.jpg",
-    "Featured": false,
-  },
-  {
-    "_id": "64462ea9a5f5577c2975ae70",
-    "Title": "The Lord of the Rings: The Two Towers",
-    "Description": "Frodo and Sam continue their journey to Mordor to destroy the One Ring, while Aragorn, Legolas, and Gimli prepare for a final battle against Saruman and his army of orcs at the fortress of Helm's Deep.",
-    "Genre": [
-        "64462577a5f5577c2975ae6d"
-    ],
-    "Director": "644624a0a5f5577c2975ae65",
-    "ImagePath": "lotr-two-towers.jpg",
-    "Featured": false
+    "director": {
+      "name": "Peter Jackson",
+      "bio": "Peter Jackson is a New Zealand film director, producer, and screenwriter. He is best known for his epic adaptations of J. R. R. Tolkien\'s novels, The Lord of the Rings trilogy and The Hobbit trilogy, both of which were filmed in his native New Zealand.",
+      "birth": "1963",
+      "death": ""
+    },
+    "imagePath": "lotr-fellowship-of-the-ring.jpg",
+    "featured": false,
   }
 ]
               </pre>
@@ -254,26 +207,23 @@
               <pre>
 [
   {
-    "_id": "64462ea9a5f5577c2975ae73",
-    "Title": "Pulp Fiction",
-    "Description": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
-    "Genre": [
-        "64462577a5f5577c2975ae6e"
+    "_id": "64462d8ba5f5577c2975ae6f",
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "description": "A young hobbit, Frodo, who has found the One Ring that belongs to the Dark Lord Sauron, begins his journey with eight companions to Mount Doom, the only place where it can be destroyed.",
+    "genre": [
+        {
+          "name": "Action",
+          "description": "Action movies usually involve high-energy, physical stunts and chases, and may or may not have a lot of dialogue."
+        }
     ],
-    "Director": "644624d9a5f5577c2975ae68",
-    "ImagePath": "pulp-fiction.jpg",
-    "Featured": false
-  },
-  {
-    "_id": "64462ea9a5f5577c2975ae74",
-    "Title": "Kill Bill: Vol. 1",
-    "Description": "After awakening from a four-year coma, a former assassin wreaks vengeance on the team of assassins who betrayed her.",
-    "Genre": [
-        "64462577a5f5577c2975ae6e"
-    ],
-    "Director": "644624d9a5f5577c2975ae68",
-    "ImagePath": "kill-bill-vol-1.jpg",
-    "Featured": false
+    "director": {
+      "name": "Peter Jackson",
+      "bio": "Peter Jackson is a New Zealand film director, producer, and screenwriter. He is best known for his epic adaptations of J. R. R. Tolkien\'s novels, The Lord of the Rings trilogy and The Hobbit trilogy, both of which were filmed in his native New Zealand.",
+      "birth": "1963",
+      "death": ""
+    },
+    "imagePath": "lotr-fellowship-of-the-ring.jpg",
+    "featured": false,
   }
 ]
               </pre>
@@ -281,54 +231,9 @@
           </tr>
         </table>
       </div>
-      <!-- GET user data about a single user -->
-      <div class="endpoint">
-        <h2><span class="http-method get">GET</span> /users/{username}</h2>
-        <p>Return data about a single user by username</p>
-        <table>
-          <tr>
-            <th>Parameter</th>
-            <th>Type</th>
-            <th>Description</th>
-          </tr>
-          <!-- PARAMETER title -->
-          <tr>
-            <td>title</td>
-            <td>Text</td>
-            <td>
-              <pre>e.g. "Frozen", "The Lion King"</pre>
-            </td>
-          </tr>
-          <!-- REQUEST body data -->
-          <tr>
-            <td>Request body data format</td>
-            <td>JSON</td>
-            <td>
-              <pre>None</pre>
-            </td>
-          </tr>
-          <!-- RESPONSE body data -->
-          <tr>
-            <td>Response body data format</td>
-            <td>JSON</td>
-            <td>
-              <pre>
-{
-  "_id": "64491747cbbcaca8d7c4e944",
-  "Username": "test1",
-  "Password": "12345",
-  "Email": "test1@test.com",
-  "favoriteMovies": [],
-  "__v": 0
-}
-              </pre>
-            </td>
-          </tr>
-        </table>
-      </div>
       <!-- GET details about a genre by genre name -->
       <div class="endpoint">
-        <h2><span class="http-method get">GET</span> /movies/genre/{genreName}/details</h2>
+        <h2><span class="http-method get">GET</span> /genres/{genreName}</h2>
         <p>Return data about a genre by genre name</p>
         <table>
           <tr>
@@ -360,8 +265,8 @@
               <pre>
 {
   "_id": "64462577a5f5577c2975ae6d",
-  "Name": "Action",
-  "Description": "Typically associated with movies that involve a lot of physical activity, such as fighting, chasing, and shooting, as well as films that feature a lot of explosions and special effects."
+  "name": "Action",
+  "description": "Typically associated with movies that involve a lot of physical activity, such as fighting, chasing, and shooting, as well as films that feature a lot of explosions and special effects."
 }
               </pre>
             </td>
@@ -370,7 +275,7 @@
       </div>
       <!-- GET details about a director by director name -->
       <div class="endpoint">
-        <h2><span class="http-method get">GET</span> /movies/director/{directorName}/details</h2>
+        <h2><span class="http-method get">GET</span> /directors/{directorName}</h2>
         <p>Return data about a director (name, bio, birth year, death year) by director name</p>
         <table>
           <tr>
@@ -402,10 +307,10 @@
               <pre>
 {
   "_id": "644624a0a5f5577c2975ae65",
-  "Name": "Peter Jackson",
-  "Bio": "Another bio text",
-  "Birth": "1961-01-01T00:00:00.000Z",
-  "Death": null
+  "name": "Peter Jackson",
+  "bio": "Another bio text",
+  "birth": "1961-01-01T00:00:00.000Z",
+  "death": null
 }
               </pre>
             </td>
@@ -429,10 +334,10 @@
             <td>
               <pre>
 {
-  "Username": "marymason2",
-  "Email": "mary@test.com",
-  "Password": "testpassword12345",
-  "Birthday": "2000-01-01"
+  "username": "marymason2",
+  "email": "mary@test.com",
+  "password": "testpassword12345",
+  "birthday": "2000-01-01"
 }
             </pre>
             </td>
@@ -444,10 +349,10 @@
             <td>
               <pre>
 {
-  "Username": "marymason2",
-  "Password": "testpassword12345",
-  "Email": "mary@test.com",
-  "Birthday": "2000-01-01T00:00:00.000Z",
+  "username": "marymason2",
+  "password": "testpassword12345",
+  "email": "mary@test.com",
+  "birthday": "2000-01-01T00:00:00.000Z",
   "favoriteMovies": [],
   "_id": "644926b635e98a9cb61d9b96",
   "__v": 0
@@ -499,9 +404,9 @@
               <pre>
 {
   "_id": "64491747cbbcaca8d7c4e944",
-  "Username": "marymason",
-  "Password": "testpassword12345",
-  "Email": "mary@test.com",
+  "username": "marymason",
+  "password": "testpassword12345",
+  "email": "mary@test.com",
   "favoriteMovies": [
       "64462f40a5f5577c2975ae7b"
   ],
@@ -537,7 +442,7 @@
             <td>
               <pre>
 {
-  "Username": "mary-updated"
+  "username": "mary-updated"
 }
               </pre>
             </td>
@@ -550,9 +455,9 @@
               <pre>
 {
   "_id": "64491747cbbcaca8d7c4e944",
-  "Username": "mary-updated",
-  "Password": "testpassword12345",
-  "Email": "mary@test.com",
+  "username": "mary-updated",
+  "password": "testpassword12345",
+  "email": "mary@test.com",
   "favoriteMovies": [
       "64462f40a5f5577c2975ae7b"
   ],
@@ -605,9 +510,9 @@
               <pre>
 {
   "_id": "64491747cbbcaca8d7c4e944",
-  "Username": "marymason",
-  "Password": "testpassword12345",
-  "Email": "mary@test.com",
+  "username": "marymason",
+  "password": "testpassword12345",
+  "email": "mary@test.com",
   "favoriteMovies": [],
   "__v": 0
 }
@@ -648,42 +553,6 @@
             <td>Text</td>
             <td>
               <pre>marymason was deleted</pre>
-            </td>
-          </tr>
-        </table>
-      </div>  
-      <!-- DELETE a movie -->
-      <div class="endpoint">
-        <h2><span class="http-method delete">DELETE</span> /movies/{movieID}</h2>
-        <p>Allow a user to delete a movie from the movie database</p>
-        <table>
-          <tr>
-            <th>Parameter</th>
-            <th>Type</th>
-            <th>Description</th>
-          </tr>
-          <!-- PARAMETER userID -->
-          <tr>
-            <td>movieID</td>
-            <td>Text</td>
-            <td>
-              <pre>e.g. "644615424368d83865506b71"</pre>
-            </td>
-          </tr>
-          <!-- REQUEST body data -->
-          <tr>
-            <td>Request body data format</td>
-            <td>JSON</td>
-            <td>
-              <pre>None</pre>
-            </td>
-          </tr>
-          <!-- RESPONSE body data -->
-          <tr>
-            <td>Response body data format</td>
-            <td>Text</td>
-            <td>
-              <pre>Movie was deleted</pre>
             </td>
           </tr>
         </table>
