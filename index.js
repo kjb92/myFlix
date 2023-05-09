@@ -87,8 +87,8 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
 });
 
 //READ: Get a user by username [MONGOOSE + AUTH]
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOne({Username: req.params.Username})
+app.get('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOne({username: req.params.username})
   .then((user) => {
     res.status(200).json(user);
   })
@@ -99,8 +99,8 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 });
 
 //READ: Get data about a single movie [MONGOOSE + AUTH]
-app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne({Title: req.params.Title})
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOne({title: req.params.title})
   .then((movie) => {
     res.status(200).json(movie);
   })
@@ -114,25 +114,50 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
 app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
   let genreName = req.params.genreName;
 
-  // Find the genre with the given genre name
-  Genre.findOne({ Name: genreName })
+  // Find all the movies that belong to the genre with the given name
+  Movies.find({ 'genre.name': genreName })
+    .then((movies) => {
+      if (!movies.length) {
+        return res.status(404).send('No movies found for the given genre.');
+      }
+      res.status(200).json(movies);
+    })
+    .catch((error) => {
+      console.error('Error finding movies:', error);
+      res.status(500).send('Internal server error.');
+    });
+});
+
+//READ: Get all movies related to a certain director [MONGOOSE + AUTH]
+app.get('/movies/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
+  let directorName = req.params.directorName;
+
+  // Find the movie with the given director name
+  Movies.find( { 'director.name': directorName } )
+    .then((movies) => {
+      if (!movies.length) {
+        return res.status(404).send('No movies found for the given director.');
+      }
+      res.status(200).json(movies);
+    })
+    .catch((error) => {
+      console.error('Error finding movies:', error);
+      res.status(500).send('Internal server error.');
+    });
+});
+
+//READ: Return data about a genre by name/title [MONGOOSE + AUTH]
+app.get('/genres/:genreName/', passport.authenticate('jwt', { session: false }), (req, res) => {
+  let genreName = req.params.genreName;
+
+  Movies.findOne({ 'genre.name': genreName })
+    .select('genre.$')
     .then((genre) => {
       if (!genre) {
         return res.status(404).send('Genre not found.');
       }
 
-      // Find all the movies that belong to the genre with the given genre ID
-      Movies.find({ Genre: { $in: [ new mongoose.Types.ObjectId(genre._id) ] } })
-        .then((movies) => {
-          if (!movies.length) {
-            return res.status(404).send('No movies found for the given genre.');
-          }
-          res.json(movies);
-        })
-        .catch((error) => {
-          console.error('Error finding movies:', error);
-          res.status(500).send('Internal server error.');
-        });
+      res.status(200).json(genre.genre[0]);
     })
     .catch((error) => {
       console.error('Error finding genre:', error);
@@ -140,41 +165,19 @@ app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: fals
     });
 });
 
-//READ: Return data about a genre by name/title [MONGOOSE + AUTH]
-app.get('/movies/genre/:genreName/details', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Genre.findOne({Name: req.params.genreName})
-  .then((genre) => {
-    res.status(200).json(genre);
-  })
-  .catch((error) => {
-    console.error(error);
-    res.status(500).send("Error: " + error);
-  });
-});
 
-//READ: Get all movies related to a certain director [MONGOOSE + AUTH]
-app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
+//READ: Return data about a director by name [MONGOOSE + AUTH]
+app.get('/directors/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
   let directorName = req.params.directorName;
 
-  // Find the genre with the given director name
-  Director.findOne({ Name: directorName })
+  Movies.findOne({ 'director.name': directorName })
+    .select('director')
     .then((director) => {
       if (!director) {
         return res.status(404).send('Director not found.');
       }
 
-      // Find all the movies that belong to the director with the given director ID
-      Movies.find({ Director: new mongoose.Types.ObjectId(director._id) })
-        .then((movies) => {
-          if (!movies.length) {
-            return res.status(404).send('No movies found for the given director.');
-          }
-          res.json(movies);
-        })
-        .catch((error) => {
-          console.error('Error finding movies:', error);
-          res.status(500).send('Internal server error.');
-        });
+      res.status(200).json(director);
     })
     .catch((error) => {
       console.error('Error finding director:', error);
@@ -182,25 +185,13 @@ app.get('/movies/director/:directorName', passport.authenticate('jwt', { session
     });
 });
 
-//READ: Return data about a director by name [MONGOOSE + AUTH]
-app.get('/movies/director/:directorName/details', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Director.findOne({Name: req.params.directorName})
-  .then((director) => {
-    res.status(200).json(director);
-  })
-  .catch((error) => {
-    console.error(error);
-    res.status(500).send("Error: " + error);
-  });
-});
-
 //CREATE: New User [MONGOOSE]
 app.post('/users',
   //Validation Rules
-  [check('Username', 'Username is required').isLength({min: 5}),
-      check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-      check('Password', 'Password is required').not().isEmpty(),
-      check('Email', 'Email does not appear to be valid').isEmail()
+  [check('username', 'Username is required').isLength({min: 5}),
+      check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+      check('password', 'Password is required').not().isEmpty(),
+      check('email', 'Email does not appear to be valid').isEmail()
     ],
   (req, res) => {
   // Check the validation object for errors
@@ -210,17 +201,17 @@ app.post('/users',
      return res.status(422).json({ errors: errors.array() });
    }
   // Lookup user
-  Users.findOne({Username: req.body.Username})
+  Users.findOne( { username: req.body.username } )
   .then((user) => {
     if (user) {
       return res.status(400).send(req.body.Username + " already exists");
     } else {
       Users
         .create({
-          Username: req.body.Username,
-          Password: Users.hashPassword(req.body.Password), // Hash password
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
+          username: req.body.username,
+          password: Users.hashPassword(req.body.password), // Hash password
+          email: req.body.email,
+          birthday: req.body.birthday
         })
         .then((user) => {res.status(201).json(user)})
         .catch((error) => {
@@ -236,12 +227,12 @@ app.post('/users',
 });
 
 //UPDATE: User Info [MONGOOSE + AUTH]
-app.put('/users/:Username',
+app.put('/users/:username',
   //Validation Rules
-  [check('Username', 'Username is required').isLength({min: 5}),
-      check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-      check('Password', 'Password is required').not().isEmpty(),
-      check('Email', 'Email does not appear to be valid').isEmail()
+  [check('username', 'Username is required').isLength({min: 5}),
+      check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+      check('password', 'Password is required').not().isEmpty(),
+      check('email', 'Email does not appear to be valid').isEmail()
   ],
   passport.authenticate('jwt', { session: false }), (req, res) => {
   // Check the validation object for errors
@@ -250,12 +241,12 @@ app.put('/users/:Username',
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-  Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+  Users.findOneAndUpdate( { username: req.params.Username }, { $set:
     {
-      Username: req.body.Username, 
-      Password: Users.hashPassword(req.body.Password),
-      Email: req.body.Email,
-      Birthday: req.body.Birthday
+      username: req.body.username, 
+      password: Users.hashPassword(req.body.password),
+      email: req.body.email,
+      birthday: req.body.birthday
     }
   }, 
   { 
@@ -274,9 +265,9 @@ app.put('/users/:Username',
 });
 
 //CREATE: Favorite movie [MONGOOSE + AUTH]
-app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username}, {
-    $push: { favoriteMovies: req.params.MovieID }
+app.post('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate( { username: req.params.username }, {
+    $push: { favoriteMovies: req.params.movieID }
   },
   { new: true })
   .then((updatedUser) => {
@@ -291,9 +282,9 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 });
 
 //DELETE: Favorite movie [MONGOOSE + AUTH]
-app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username}, {
-    $pull: { favoriteMovies: req.params.MovieID }
+app.delete('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate({ username: req.params.username}, {
+    $pull: { favoriteMovies: req.params.movieID }
   },
   { new: true })
   .then((updatedUser) => {
@@ -308,14 +299,14 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 });
 
 //DELETE: User [MONGOOSE + AUTH]
-app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndDelete({ Username: req.params.Username })
+app.delete('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndDelete({ username: req.params.username })
   .then((user) => {
     // Handle success
     if (!user) {
-      res.status(400).send(req.params.Username + " was not found");
+      res.status(400).send(req.params.username + " was not found");
     } else {
-      res.status(200).send(req.params.Username + " was deleted");
+      res.status(200).send(req.params.username + " was deleted");
     } 
   })
   .catch((error) => {
@@ -326,8 +317,8 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //DELETE: Movie [MONGOOSE + AUTH]
-app.delete('/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOneAndDelete({ _id: req.params.MovieID })
+app.delete('/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOneAndDelete({ _id: req.params.movieID })
   .then((movie) => {
     // Handle success
     if (!movie) {
