@@ -10,7 +10,7 @@ const { check, validationResult } = require('express-validator');
 
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
-    subject: user.Username, // This is the username you’re encoding in the JWT
+    subject: user.username, // This is the username you’re encoding in the JWT
     expiresIn: '7d', // This specifies that the token will expire in 7 days
     algorithm: 'HS256' // This is the algorithm used to “sign” or encode the values of the JWT
   });
@@ -21,9 +21,9 @@ let generateJWTToken = (user) => {
 module.exports = (router) => {
   router.post('/login',
     //Validation Rules
-    [check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty()
+    [check('username', 'Username is required').isLength({min: 5}),
+    check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'Password is required').not().isEmpty()
     ], 
     (req, res) => {
     // Check the validation object for errors
