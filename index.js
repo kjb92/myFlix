@@ -99,7 +99,7 @@ app.get('/users/:username', passport.authenticate('jwt', { session: false }), (r
   Users.findOne({username: username})
   .then((user) => {
     if (!user) {
-      return res.status(404).send(username + 'not found.');
+      return res.status(404).send('User not found.');
     }
     res.status(200).json(user);
   })
@@ -116,7 +116,7 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
   Movies.findOne({title: movieTitle})
   .then((movie) => {
     if (!movie) {
-      return res.status(404).send(movieTitle + 'not found.');
+      return res.status(404).send('Movie not found.');
     }
     res.status(200).json(movie);
   })
