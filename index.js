@@ -7,9 +7,7 @@ uuid = require('uuid');
 const mongoose = require('mongoose'),
 Models = require('./models.js'),
 Movies = Models.Movie,
-Users = Models.User,
-Genre = Models.Genre,
-Director = Models.Director;
+Users = Models.User;
 
 //Import express-validator
 const { check, validationResult } = require('express-validator');
