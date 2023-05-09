@@ -66,6 +66,9 @@ app.get('/documentation', (req, res) => {
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
+    if (!movies) {
+      return res.status(404).send('No movies found.');
+    }
     res.status(200).json(movies);
   })
   .catch((error) => {
@@ -78,6 +81,9 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
   .then((users) => {
+    if (!users) {
+      return res.status(404).send('No users found.');
+    }
     res.status(200).json(users);
   })
   .catch((err) => {
@@ -88,8 +94,13 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
 
 //READ: Get a user by username [MONGOOSE + AUTH]
 app.get('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOne({username: req.params.username})
+  let username = req.params.username;
+
+  Users.findOne({username: username})
   .then((user) => {
+    if (!user) {
+      return res.status(404).send(username + 'not found.');
+    }
     res.status(200).json(user);
   })
   .catch((err) => {
@@ -100,8 +111,13 @@ app.get('/users/:username', passport.authenticate('jwt', { session: false }), (r
 
 //READ: Get data about a single movie [MONGOOSE + AUTH]
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne({title: req.params.title})
+  let movieTitle = req.params.title;
+
+  Movies.findOne({title: movieTitle})
   .then((movie) => {
+    if (!movie) {
+      return res.status(404).send(movieTitle + 'not found.');
+    }
     res.status(200).json(movie);
   })
   .catch((error) => {
@@ -164,7 +180,6 @@ app.get('/genres/:genreName/', passport.authenticate('jwt', { session: false }),
       res.status(500).send('Internal server error.');
     });
 });
-
 
 //READ: Return data about a director by name [MONGOOSE + AUTH]
 app.get('/directors/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -300,13 +315,15 @@ app.delete('/users/:username/movies/:movieID', passport.authenticate('jwt', { se
 
 //DELETE: User [MONGOOSE + AUTH]
 app.delete('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndDelete({ username: req.params.username })
+  let username = req.params.username;
+
+  Users.findOneAndDelete({ username: username })
   .then((user) => {
     // Handle success
     if (!user) {
-      res.status(400).send(req.params.username + " was not found");
+      res.status(400).send(username + " was not found");
     } else {
-      res.status(200).send(req.params.username + " was deleted");
+      res.status(200).send(username + " was deleted");
     } 
   })
   .catch((error) => {
