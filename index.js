@@ -145,7 +145,7 @@ app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: fals
 });
 
 //READ: Get all movies related to a certain director [MONGOOSE + AUTH]
-app.get('/movies/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
   let directorName = req.params.directorName;
 
   // Find the movie with the given director name
