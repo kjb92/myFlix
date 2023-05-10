@@ -19,16 +19,16 @@ OR colone the repository and test it using Postman: Follow the instructions belo
 
 # Prerequisites
 
-Node.js - JavaScript runtime environment
-MongoDB - Database
-npm - Node package manager
+Node.js - JavaScript runtime environment<br>
+MongoDB - Database<br>
+npm - Node package manager<br>
 
 ## Installation
 
 1. Open your terminal and navigate to the directory where you want to clone the repository.
 2. Clone the repository:
 ```bash
-git clone git clone https://github.com/kjb92/myFlix.git
+git clone https://github.com/kjb92/myFlix.git
 ```
 
 2. Navigate to the root directory of the project.
@@ -37,7 +37,7 @@ git clone git clone https://github.com/kjb92/myFlix.git
 5. Create a .env file in the root directory and add your 
    MongoDB connection URI as CONNECTION_URI.
 6. Run npm start to start the server.
-7. Open a web browser and navigate to http://localhost:8080 to access the API documentation.
+7. Open a web browser and navigate to http://localhost:8080/documentation to access the API documentation.
 
 
 | URL                        | Method | Description                                         |
@@ -58,6 +58,6 @@ git clone git clone https://github.com/kjb92/myFlix.git
 # Built With
 
 
-Node.js - JavaScript runtime
-Express - Backend Framework
-MongoDB - Database
+Node.js - JavaScript runtime<br>
+Express - Backend Framework<br>
+MongoDB - Databaseb<br>
