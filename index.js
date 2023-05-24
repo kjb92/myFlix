@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Import CORS
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080']; //enter all trusted origins
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://codesandbox.io/']; //enter all trusted origins
 
 app.use(cors({
   origin: (origin, callback) => {
