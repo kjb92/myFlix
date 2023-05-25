@@ -61,7 +61,7 @@ app.get('/documentation', (req, res) => {
 });
 
 //READ: Get all movies [MONGOOSE + AUTH]
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', (req, res) => {
   Movies.find()
   .then((movies) => {
     if (!movies) {
