@@ -317,6 +317,63 @@
           </tr>
         </table>
       </div>        
+      <!-- POST Log a user in -->
+      <div class="endpoint">
+        <h2><span class="http-method post">POST</span> /login?username={username}&password={password}</h2>
+        <p>Allow a user to log in</p>
+        <table>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <!-- PARAMETER username -->
+          <tr>
+            <td>username</td>
+            <td>Text</td>
+            <td>
+              <pre>e.g. "test-username"</pre>
+            </td>
+          </tr>
+         <!-- PARAMETER password -->
+         <tr>
+          <td>password</td>
+          <td>Password</td>
+          <td>
+            <pre>e.g. "testPassword"</pre>
+          </td>
+        </tr>
+          <!-- REQUEST body data -->
+          <tr>
+            <td>Request body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>None</pre>
+            </td>
+          </tr>
+          <!-- RESPONSE body data -->
+          <tr>
+            <td>Response body data format</td>
+            <td>JSON</td>
+            <td>
+              <pre>
+{
+  "user": {
+      "_id": "64708a788fe21272932f01f1",
+      "username": "test-username",
+      "password": "$2b$10$on.tKYq.aZC1OMO26M/RgugLG/PeM6S/KH6IrrqHLiI/h47lraoce",
+      "email": "test@test.com",
+      "birthday": "2000-01-01T00:00:00.000Z",
+      "favoriteMovies": [],
+      "__v": 0
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDcwOGE3ODhmZTIxMjcyOTMyZjAxZjEiLCJ1c2VybmFtZSI6ImtldmluIiwicGFzc3dvcmQiOiIkMmIkMTAkb24udEtZcS5hWkMxT01PMjZNL1JndWdMRy9QZU02Uy9LSDZJcnJxSExpSS9oNDdscmFvY2UiLCJlbWFpbCI6ImtldmluQHRlc3QuY29tIiwiYmlydGhkYXkiOiIyMDAwLTAxLTAxVDAwOjAwOjAwLjAwMFoiLCJmYXZvcml0ZU1vdmllcyI6W10sIl9fdiI6MCwiaWF0IjoxNjg1MDk3MDkwLCJleHAiOjE2ODU3MDE4OTAsInN1YiI6ImtldmluIn0.xBM-ntfnCVop-bbtocwyTzCZRWZ_lB8fPNZaMwvLzfE"
+}
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </div>  
       <!-- POST add a new user -->
       <div class="endpoint">
         <h2><span class="http-method post">POST</span> /users</h2>

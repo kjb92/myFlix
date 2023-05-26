@@ -48,6 +48,7 @@ git clone https://github.com/kjb92/myFlix.git
 | /movies/:directorName      | GET    | Get all movies with a specific genre                |
 | /genres/:genreName         | GET    | Return info about the genre of a movie              |
 | /directors/:directorName   | GET    | Return info about the director of a movie           |
+| /login                     | POST   | Log a user in                                       |
 | /users                     | POST   | Create a new user                                   |
 | /users/:username           | PUT    | Update a user's info by name                        |
 | /users/:username/movies/:movieID | POST  | Add a movie to a user's list of favorites      |
